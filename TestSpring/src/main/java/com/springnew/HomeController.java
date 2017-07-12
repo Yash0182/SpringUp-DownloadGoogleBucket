@@ -20,9 +20,7 @@ public class HomeController {
 			String name = request.getParameter("name");
 			response.getWriter().println("Welcome  " +name);
 			
-			//String role = request.getParameter("role");
-			//ServletContext context = getServletContext();
-			//context.setAttribute("roles", role);
+			
 			
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html");
@@ -32,7 +30,7 @@ public class HomeController {
 			out.println("<h3>Select the action you wanted to perform</h3>");
 			out.println("<br/>");
 			
-			out.println("<a href='up.html'>Upload</a>");
+			
 			
 			out.println("<a href='down.jsp'>TestDownload</a>");
 			out.println("<a href='add2.jsp'>TestUpload</a>");

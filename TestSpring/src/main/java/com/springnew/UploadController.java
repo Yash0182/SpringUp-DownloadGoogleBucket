@@ -25,6 +25,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.cloud.storage.Bucket;
@@ -37,28 +39,23 @@ import com.google.cloud.storage.BlobId;
 @Controller
 public class UploadController {
 
-		@RequestMapping("/TestBucket")
-		protected ModelAndView doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+		@RequestMapping("/upload")
+		public ModelAndView doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			String targetFileStr ="";
 			List<FileItem> fileName = null;
 		    Storage storage = StorageOptions.getDefaultInstance().getService();
 
-		    
-		    String bucketName = "vendor-bucket14";  // "my-new-bucket";
+		    String bucketName = "vendor-bucket15";  // "my-new-bucket";
 
-		    
+		    // Creates the new bucket
 		    Bucket bucket = storage.create(BucketInfo.of(bucketName));
-		    
-
-		    
-		    
-		    
+		 System.out.println(request.getParameter("testtext"));
 		    ServletFileUpload sfu = new ServletFileUpload(new DiskFileItemFactory());
 			try {
 				 fileName = sfu.parseRequest(request);
 				 for(FileItem f:fileName)
 					{
+					 System.out.println(f);
 					try {
 						f.write (new File("/Users/tkmajdt/Documents/workspace/File1POC1/" + f.getName()));
 					} catch (Exception e) {
@@ -67,6 +64,7 @@ public class UploadController {
 					}
 					
 					targetFileStr = new String(Files.readAllBytes(Paths.get("/Users/tkmajdt/Documents/workspace/File1POC1/" + f.getName())));
+					System.out.println("target" +targetFileStr);
 					}
 			} 
 		
